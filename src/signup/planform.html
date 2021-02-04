@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Netflix Clone</title>
+<style>
+	* {
+		box-sizing: border-box;
+	}
+
+	body {
+		font-family: Arial, Helvetica, sans-serif;
+	}
+
+	header {
+		background-color: #666;
+	  	padding: 10px;
+	  	font-size: 20px;
+	  	color: white;
+	}
+	
+	.content {
+		float: left;
+	  	padding: 30px;
+		text-align: center;
+	  	width: 100%;
+	  	background-color: #f1f1f1;
+	  	height: 650px;
+	}
+	
+	table {
+	  font-family: arial, sans-serif;
+	  border-collapse: collapse;
+	  width: 100%;
+	}
+
+	td, th {
+	  border: 1px solid #bbbbbb;
+	  text-align: left;
+	  padding: 8px;
+	}
+
+	tr:nth-child(even) {
+	  background-color: #dddddd;
+	}
+	
+	.formcontent{
+		padding-top: 20px;
+		padding-left: 150px;
+		padding-right: 150px;
+	}
+	
+</style>
+</head>
+<body>
+
+<header>
+	<h2>Netflix Clone</h2>
+</header>
+
+<div class="content">
+	<p>STEP 2 OF 3</p>
+	<h2>Choose the plan that’s right for you</h2>
+	<p>Downgrade or upgrade at any time.</p>
+
+	<form onSubmit="setAction(this)" class="formcontent">
+		<table>
+			<tr>
+				<th/>
+				<th>Basic<input type="radio" id="basic" name="selectedplan" value="basic" required></th>
+				<th>Standard<input type="radio" id="standard" name="selectedplan" value="standard"></th>
+				<th>Premium<input type="radio" id="premium" name="selectedplan" value="premium"></th>
+			</tr>
+			<tr>
+				<td>Monthly price</td>
+				<td>17.99 TL</td>
+				<td>29.99 TL</td>
+				<td>41.99 TL</td>
+			</tr>
+			<tr>
+				<td>Video quality</td>
+				<td>Good</td>
+				<td>Better</td>
+				<td>Best</td>
+			</tr>
+			<tr>
+				<td>Resolution</td>
+				<td>480p</td>
+				<td>1080p</td>
+				<td>4K+HDR</td>
+			</tr>
+			<tr>
+				<td>Screens you can watch on at the same time</td>
+				<td>1</td>
+				<td>2</td>
+				<td>4</td>
+			</tr>
+			<tr>
+				<td>Watch on your TV, computer, mobile phone and tablet</td>
+				<td>YES</td>
+				<td>YES</td>
+				<td>YES</td>
+			</tr>
+			<tr>
+				<td>Unlimited movies and TV shows</td>
+				<td>YES</td>
+				<td>YES</td>
+				<td>YES</td>
+			</tr>
+			<tr>
+				<td>Cancel anytime</td>
+				<td>YES</td>
+				<td>YES</td>
+				<td>YES</td>
+			</tr>
+		</table>
+		<br>
+		<button type="submit">CONTINUE</button>
+	</form>
+</div>
+<script>
+	function setAction(form) {
+		form.action = "payment.html";
+	  	return false;
+	}
+</script>
+
+</body>
+</html>

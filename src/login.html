@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Netflix Clone</title>
+	
+<style>
+	* {
+		box-sizing: border-box;
+	}
+
+	body {
+		font-family: Arial, Helvetica, sans-serif;
+	}
+
+	header {
+		background-color: #666;
+	  	padding: 10px;
+	  	font-size: 20px;
+	  	color: white;
+	}
+	
+	.signInForm {
+		float: left;
+	  	padding: 60px;
+		text-align: center;
+	  	width: 100%;
+	  	background-color: #f1f1f1;
+	  	height: 650px;
+	}
+	
+</style>
+</head>
+<body>
+
+<header>
+	<h2>Netflix Clone</h2>
+</header>
+
+<div class="signInForm">
+	<h2>Sign In</h2>
+	<form onsubmit="setAction(this)" method="post">
+		<label for="email"><b>Email</b></label>
+		<input type="email" placeholder="Email" name="email" required>
+		<br><br>
+		<label for="psw"><b>Password</b></label>
+		<input type="password" placeholder="Password" name="psw" required>
+		<br><br>
+		<button type="submit">Sign In</button>
+		<br><br>
+		<label>
+		<input type="checkbox" checked="checked" name="remember"> Remember me
+		</label>
+		<br><br>
+		<span><a href="#">Need help?</a></span><br><br>
+		<span>New to Netflix? <a href="index.html">Sign up now.</a></span>
+	</form>
+</div>
+	
+<script>
+	function setAction(form) {
+		alert("SIGN IN BUTTON CLICKED!")
+		form.action = "#";
+	  	return false;
+	}
+</script>
+</body>
+</html>
