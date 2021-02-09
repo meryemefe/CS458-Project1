@@ -75,6 +75,8 @@
 
 <script>
 	function setAction(form) {
+		var mailAddress = document.getElementById("email").value;
+		localStorage.setItem("current_signup_mail", mailAddress);
 		form.action = "signup/registration.html";
 	  	return false;
 	}
