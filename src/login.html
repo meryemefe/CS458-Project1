@@ -41,10 +41,10 @@
 	<h2>Sign In</h2>
 	<form onsubmit="setAction(this)" method="post">
 		<label for="email"><b>Email</b></label>
-		<input type="email" placeholder="Email" name="email" required>
+		<input type="email" id="email" placeholder="Email" name="email" required>
 		<br><br>
 		<label for="psw"><b>Password</b></label>
-		<input type="password" placeholder="Password" name="psw" required>
+		<input type="password" id="password" placeholder="Password" name="psw" required>
 		<br><br>
 		<button type="submit">Sign In</button>
 		<br><br>
@@ -59,9 +59,30 @@
 	
 <script>
 	function setAction(form) {
-		alert("SIGN IN BUTTON CLICKED!")
-		form.action = "#";
+		
+		var database = JSON.parse(localStorage.getItem("database"));
+		var email = document.getElementById("email").value;
+		var password = document.getElementById("password").value;
+
+		var isVerified = verifyCredentials(database,email,password);
+		if (isVerified == false){
+			alert("Invalid Credentials");
+			form.action="#";
+		}
+		else{
+			form.action = "mainmenu.html";
+		}
+		
 	  	return false;
+	}
+
+	function verifyCredentials(database,email,password){
+		for (var i=0; i < database.length; i++){
+			if (database[i].email == email && database[i].password == password){
+				return true;
+			}
+		}
+		return false;
 	}
 </script>
 </body>

@@ -46,7 +46,21 @@
 	
 <script>
 	function setAction() {
-		alert("You registered successfully!")
+		var newEntry = {email: localStorage.getItem("current_signup_mail"), password: localStorage.getItem("current_signup_password")};
+		localStorage.removeItem("current_signup_mail");
+		localStorage.removeItem("current_signup_password");
+
+		if (localStorage.getItem("database") == null){
+			var database = [];
+		}
+		else{
+			var database = JSON.parse( localStorage.getItem("database"));
+		}
+		database.push(newEntry);
+		var database_JSON = JSON.stringify(database);
+		localStorage.setItem("database", database_JSON);
+
+		alert("You registered successfully!");
 		window.location.href = '../index.html';
 	}
 </script>
