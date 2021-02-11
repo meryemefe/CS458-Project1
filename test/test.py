@@ -35,6 +35,7 @@ class NetflixWebPageTester:
 		sign_in_button.click();
 		time.sleep(0.2)
 
+		###########################################
 		## Test with correct mail and password
 		self.netflix_login_test("kose.dogukan@hotmail.com", "dogukan")
 		time.sleep(0.2)
@@ -45,20 +46,34 @@ class NetflixWebPageTester:
 		log_out_button = self.driver.find_element_by_id("logout")
 		log_out_button.click();
 		time.sleep(0.2)
+		##
+		###########################################
 
+		###########################################
 		## Test with wrong mail and wrong password
 		self.netflix_login_test("wrong_email@hotmail.com", "wrongPassword")
 		time.sleep(0.2)
 
 		assert self.driver.switch_to.alert.text == "Invalid Credentials", "Login with wrong mail and password failed."
 		self.driver.switch_to.alert.accept();
+		##
+		###########################################
 
+		##########################################
 		## Test with empty mail and password
 		self.netflix_login_test("", "")
 		time.sleep(0.2)
 
 		assert self.driver.switch_to.alert.text == "Empty Credentials", "Login with empty mail and password failed."
 		self.driver.switch_to.alert.accept();
+		##
+		###########################################
+
+		###########################################				
+		## Test with remember me check button
+		self.netflix_remember_me_test("kose.dogukan@hotmail.com", "dogukan", False)
+		##
+		###########################################
 
 	def netflix_login_test(self, email, password):
 
@@ -75,6 +90,43 @@ class NetflixWebPageTester:
 			time.sleep(0.2)
 			submit_button.click()
 			time.sleep(3)
+
+		except Exception as e:
+			print(str(e))
+
+	def netflix_remember_me_test(self, email, password, remember_me):
+
+		try:
+			email_input = self.driver.find_element_by_id("email")
+			password_input = self.driver.find_element_by_id("password")
+			remember_me_check_box = self.driver.find_element_by_id("checkbox_remember_me")
+			submit_button = self.driver.find_element_by_id("submit")
+
+			if (remember_me_check_box.is_selected() and remember_me == False):
+				remember_me_check_box.click()
+			if (not remember_me_check_box.is_selected() and remember_me == True):
+				remember_me_check_box.click()
+
+			email_input.clear()
+			email_input.send_keys(email)
+			password_input.clear()
+			password_input.send_keys(password)
+
+			time.sleep(0.5)
+		
+			submit_button.click()
+			time.sleep(0.5)
+
+			log_out_button = self.driver.find_element_by_id("logout")
+			log_out_button.click();
+			time.sleep(0.5)	
+
+			last_email_input = self.driver.find_element_by_id("email").get_attribute('value')
+			last_password_input = self.driver.find_element_by_id("password").get_attribute('value')
+
+			assert (last_email_input == email), "Remember me check box test failed, cannot remember mail"
+			assert (last_password_input == password), "Remember me check box test failed, cannot remember password"
+			
 
 		except Exception as e:
 			print(str(e))
