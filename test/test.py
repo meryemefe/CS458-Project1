@@ -53,6 +53,13 @@ class NetflixWebPageTester:
 		assert self.driver.switch_to.alert.text == "Invalid Credentials", "Login with wrong mail and password failed."
 		self.driver.switch_to.alert.accept();
 
+		## Test with empty mail and password
+		self.netflix_login_test("", "")
+		time.sleep(0.2)
+
+		assert self.driver.switch_to.alert.text == "Empty Credentials", "Login with empty mail and password failed."
+		self.driver.switch_to.alert.accept();
+
 	def netflix_login_test(self, email, password):
 
 		try:
