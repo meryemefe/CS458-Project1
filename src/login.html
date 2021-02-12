@@ -59,7 +59,6 @@
 	
 <script>
 	function setAction(form) {
-		
 		var database = JSON.parse(localStorage.getItem("database"));
 		var email = document.getElementById("email").value;
 		var password = document.getElementById("password").value;
@@ -73,6 +72,18 @@
 		else if(isVerified === 2 ){
 			alert("Empty Credentials");
 		}else{
+			var rememberMeCreds;
+			if (document.getElementById("checkbox_remember_me").checked){
+				rememberMeCreds = {rememberEmail:email, rememberPass:password}; 
+				
+			}
+			
+			else {
+				rememberMeCreds = {rememberEmail:"", rememberPass:""};
+			}
+			
+			var rememberMeCreds_JSON = JSON.stringify(rememberMeCreds);
+			localStorage.setItem("remember_me_credentials", rememberMeCreds_JSON);
 			form.action = "mainmenu.html";
 		}
 		
@@ -89,6 +100,16 @@
 		}
 		return 1;
 	}
+	
+	function fillCredentials(){
+		if (localStorage.getItem("remember_me_credentials") != null){
+			var rememberMeCreds = JSON.parse(localStorage.getItem("remember_me_credentials"));
+			document.getElementById("email").value = rememberMeCreds.rememberEmail;
+			document.getElementById("password").value = rememberMeCreds.rememberPass;
+		}
+	}
+	
+	fillCredentials();
 </script>
 </body>
 </html>
