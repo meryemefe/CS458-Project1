@@ -70,7 +70,13 @@ class NetflixWebPageTester:
 		###########################################
 
 		###########################################				
-		## Test with remember me check button
+		## Test with remember me check button when it is true
+		self.netflix_remember_me_test("kose.dogukan@hotmail.com", "dogukan", True)
+		##
+		###########################################
+
+		###########################################				
+		## Test with remember me check button when it is false
 		self.netflix_remember_me_test("kose.dogukan@hotmail.com", "dogukan", False)
 		##
 		###########################################
@@ -124,9 +130,12 @@ class NetflixWebPageTester:
 			last_email_input = self.driver.find_element_by_id("email").get_attribute('value')
 			last_password_input = self.driver.find_element_by_id("password").get_attribute('value')
 
-			assert (last_email_input == email), "Remember me check box test failed, cannot remember mail"
-			assert (last_password_input == password), "Remember me check box test failed, cannot remember password"
-			
+			if (remember_me):
+				assert (last_email_input == email), "Remember me check box test failed, cannot remember mail"
+				assert (last_password_input == password), "Remember me check box test failed, cannot remember password"
+			else:
+				assert (last_email_input == ""), "Remember me check box test failed. Remember_me is not checked but it remembered email"
+				assert (last_password_input == ""), "Remember me check box test failed. Remember_me is not checked but it remembered password"
 
 		except Exception as e:
 			print(str(e))
