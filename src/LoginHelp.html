@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Netflix Clone</title>
+	
+<style>
+	* {
+		box-sizing: border-box;
+	}
+
+	body {
+		font-family: Arial, Helvetica, sans-serif;
+	}
+
+	header {
+		background-color: #666;
+	  	padding: 10px;
+	  	font-size: 20px;
+	  	color: white;
+	}
+	
+	.forgotPasswordForm {
+		float: left;
+	  	padding: 30px;
+		text-align: center;
+	  	width: 100%;
+	  	background-color: #f1f1f1;
+	  	height: 650px;
+	}
+	
+</style>
+</head>
+<body>
+
+<header>
+	<h2>Netflix Clone</h2>
+</header>
+
+<div class="forgotPasswordForm">
+	<h2>Forgot Email/Password</h2>
+	<p>How would you like to reset your password?</p><br>
+	<form onsubmit="setActionEmail(this)" method="post">
+		<p><b>Email</b></p>
+		<input type="email" id="email" placeholder="name@example.com" name="email">
+		<br>
+		<p>We will send you an email with instructions on how to reset your password.</p>
+		<button id="submitEmail" type="submit">Email Me</button>
+	</form>
+	<br><br>
+	<form onsubmit="setActionSMS(this)" method="post">
+		<p><b>Text Message (SMS)</b></p>
+		<input type="tel" id="phone" placeholder="+905551112233" pattern="[\+]\d{2}\d{2}\d{4}\d{4}" name="phone">
+		<br>
+		<p>We will text you a verification code to reset your password. Text fees may apply.</p>
+		<button id="submitPhone" type="submit">Text Me</button>
+	</form>
+</div>
+	
+<script>
+	
+	function setActionEmail(form) {
+		alert("Email Sent")	
+	  	return false;
+	}
+	
+	function setActionSMS(form) {
+		alert("SMS Sent")	
+	  	return false;
+	}
+</script>
+</body>
+</html>
