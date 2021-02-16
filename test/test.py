@@ -79,7 +79,9 @@ class NetflixWebPageTester:
 		## Test with remember me check button when it is false
 		self.netflix_remember_me_test("kose.dogukan@hotmail.com", "dogukan", False)
 		##
-		###########################################
+		##########################################
+		time.sleep(0.2)
+		self.change_password_test("kose.dogukan@hotmail.com", "d")
 
 	def netflix_login_test(self, email, password):
 
@@ -140,7 +142,46 @@ class NetflixWebPageTester:
 		except Exception as e:
 			print(str(e))
 
-         
+	def change_password_test(self, email, newpassword):
+		try:
+			need_help_link = self.driver.find_element_by_link_text('Need help?')
+			time.sleep(0.5)
+			need_help_link.click()
+			email_input = self.driver.find_element_by_id("email")
+			newpassword_input = self.driver.find_element_by_id("password")
+			button_element = self.driver.find_element_by_id("submitEmail")
+    
+			email_input.clear()
+			email_input.send_keys(email)
+			newpassword_input.clear()
+			newpassword_input.send_keys(newpassword)
+			button_element.click()
+			time.sleep(0.5)
+
+			assert self.driver.switch_to.alert.text == "Your password is successfully changed!"
+			self.driver.switch_to.alert.accept()
+			time.sleep(0.5)
+
+			email_input = self.driver.find_element_by_id("email")
+			password_input = self.driver.find_element_by_id("password")
+			button_element = self.driver.find_element_by_id("submit")
+
+			email_input.clear()
+			email_input.send_keys(email)
+			password_input.clear()
+			password_input.send_keys(newpassword)
+			button_element.click()
+			time.sleep(0.5)
+
+			assert self.driver.find_element_by_id("main_menu_text").text == "Signed In"
+
+			time.sleep(0.5)
+
+			log_out_button = self.driver.find_element_by_id("logout")
+			log_out_button.click()
+
+		except Exception as e:
+			print(str(e))
 
 netflixWebPageTester = NetflixWebPageTester();
 netflixWebPageTester.run_tests();
