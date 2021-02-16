@@ -26,7 +26,7 @@
 		text-align: center;
 	  	width: 100%;
 	  	background-color: #f1f1f1;
-	  	height: 650px;
+		height: 650px;
 	}
 	
 </style>
@@ -38,36 +38,60 @@
 </header>
 
 <div class="forgotPasswordForm">
-	<h2>Forgot Email/Password</h2>
-	<p>How would you like to reset your password?</p><br>
-	<form onsubmit="setActionEmail(this)" method="post">
-		<p><b>Email</b></p>
-		<input type="email" id="email" placeholder="name@example.com" name="email">
-		<br>
-		<p>We will send you an email with instructions on how to reset your password.</p>
-		<button id="submitEmail" type="submit">Email Me</button>
-	</form>
-	<br><br>
-	<form onsubmit="setActionSMS(this)" method="post">
-		<p><b>Text Message (SMS)</b></p>
-		<input type="tel" id="phone" placeholder="+905551112233" pattern="[\+]\d{2}\d{2}\d{4}\d{4}" name="phone">
-		<br>
-		<p>We will text you a verification code to reset your password. Text fees may apply.</p>
-		<button id="submitPhone" type="submit">Text Me</button>
+	<h2>Forgot Password</h2>
+	<p>Just write your email and your new password!</p><br>
+	<form onsubmit="setAction(this)" method="post">
+		<input type="email" id="email" placeholder="name@example.com" name="email" required>
+		<br><br>
+		<input type="password" id="password" placeholder="New Password" name="password" required>
+		<br><br>
+		<button id="submitEmail" type="submit">Change Password</button>
 	</form>
 </div>
 	
-<script>
-	
-	function setActionEmail(form) {
-		alert("Email Sent")	
+<script>  
+
+	function setAction(form) {
+
+		var database = JSON.parse(localStorage.getItem("database"));
+		var currentEmail = document.getElementById("email").value;
+		var newPassword = document.getElementById("password").value;
+
+		var verifiedIndex = verifyEmail(database, currentEmail);
+		console.log("email found at index: " + verifiedIndex);		
+		
+		if (verifiedIndex  === -1){
+			alert("Invalid Email!");
+			form.action="#";
+		}
+		else if(verifiedIndex  === -2 ){
+			alert("Empty Email!");
+		}else{
+			var newEntry = {email: document.getElementById("email").value, password: document.getElementById("password").value};
+			database.splice(verifiedIndex, 1);
+			database.push(newEntry);
+			
+			var database_JSON = JSON.stringify(database);
+			localStorage.setItem("database", database_JSON);
+			
+			alert("Your password is successfully changed!");
+			form.action = "login.html";
+		}
+		
 	  	return false;
 	}
-	
-	function setActionSMS(form) {
-		alert("SMS Sent")	
-	  	return false;
+
+	function verifyEmail(database, email){
+		console.log("inside verify email function in forgot password page");
+		if (email.length === 0 ) return -2;
+		for (var i=0; i < database.length; i++){
+			if (database[i].email == email){
+				return i;
+			}
+		}
+		return -1;
 	}
+
 </script>
 </body>
 </html>
