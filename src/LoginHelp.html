@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Netflix Clone</title>
+	
+<style>
+	* {
+		box-sizing: border-box;
+	}
+
+	body {
+		font-family: Arial, Helvetica, sans-serif;
+	}
+
+	header {
+		background-color: #666;
+	  	padding: 10px;
+	  	font-size: 20px;
+	  	color: white;
+	}
+	
+	.forgotPasswordForm {
+		float: left;
+	  	padding: 30px;
+		text-align: center;
+	  	width: 100%;
+	  	background-color: #f1f1f1;
+		height: 650px;
+	}
+	
+</style>
+</head>
+<body>
+
+<header>
+	<h2>Netflix Clone</h2>
+</header>
+
+<div class="forgotPasswordForm">
+	<h2>Forgot Password</h2>
+	<p>Just write your email and your new password!</p><br>
+	<form onsubmit="setAction(this)" method="post">
+		<input type="email" id="email" placeholder="name@example.com" name="email" required>
+		<br><br>
+		<input type="password" id="password" placeholder="New Password" name="password" required>
+		<br><br>
+		<button id="submitEmail" type="submit">Change Password</button>
+	</form>
+</div>
+	
+<script>  
+
+	function setAction(form) {
+
+		var database = JSON.parse(localStorage.getItem("database"));
+		var currentEmail = document.getElementById("email").value;
+		var newPassword = document.getElementById("password").value;
+
+		var verifiedIndex = verifyEmail(database, currentEmail);
+		console.log("email found at index: " + verifiedIndex);		
+		
+		if (verifiedIndex  === -1){
+			alert("Invalid Email!");
+			form.action="#";
+		}
+		else if(verifiedIndex  === -2 ){
+			alert("Empty Email!");
+		}else{
+			var newEntry = {email: document.getElementById("email").value, password: document.getElementById("password").value};
+			database.splice(verifiedIndex, 1);
+			database.push(newEntry);
+			
+			var database_JSON = JSON.stringify(database);
+			localStorage.setItem("database", database_JSON);
+			
+			alert("Your password is successfully changed!");
+			form.action = "login.html";
+		}
+		
+	  	return false;
+	}
+
+	function verifyEmail(database, email){
+		console.log("inside verify email function in forgot password page");
+		if (email.length === 0 ) return -2;
+		for (var i=0; i < database.length; i++){
+			if (database[i].email == email){
+				return i;
+			}
+		}
+		return -1;
+	}
+
+</script>
+</body>
+</html>

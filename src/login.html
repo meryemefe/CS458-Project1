@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Netflix Clone</title>
+	
+<style>
+	* {
+		box-sizing: border-box;
+	}
+
+	body {
+		font-family: Arial, Helvetica, sans-serif;
+	}
+
+	header {
+		background-color: #666;
+	  	padding: 10px;
+	  	font-size: 20px;
+	  	color: white;
+	}
+	
+	.signInForm {
+		float: left;
+	  	padding: 60px;
+		text-align: center;
+	  	width: 100%;
+	  	background-color: #f1f1f1;
+	  	height: 650px;
+	}
+	
+</style>
+</head>
+<body>
+
+<header>
+	<h2>Netflix Clone</h2>
+</header>
+
+<div class="signInForm">
+	<h2>Sign In</h2>
+	<form onsubmit="setAction(this)" method="post">
+		<label for="email"><b>Email</b></label>
+		<input type="email" id="email" placeholder="Email" name="email">
+		<br><br>
+		<label for="psw"><b>Password</b></label>
+		<input type="password" id="password" placeholder="Password" name="psw">
+		<br><br>
+		<button id="submit" type="submit">Sign In</button>
+		<br><br>
+		<label>
+		<input id="checkbox_remember_me" type="checkbox" checked="checked" name="remember"> Remember me
+		</label>
+		<br><br>
+		<span><a href="LoginHelp.html">Need help?</a></span><br><br>
+		<span>New to Netflix? <a href="index.html">Sign up now.</a></span>
+	</form>
+</div>
+	
+<script>
+	function setAction(form) {
+		var database = JSON.parse(localStorage.getItem("database"));
+		var email = document.getElementById("email").value;
+		var password = document.getElementById("password").value;
+
+		var isVerified = verifyCredentials(database,email,password);
+		console.log("code: " + isVerified);
+		if (isVerified === 1){
+			alert("Invalid Credentials");
+			form.action="#";
+		}
+		else if(isVerified === 2 ){
+			alert("Empty Credentials");
+		}else{
+			var rememberMeCreds;
+			if (document.getElementById("checkbox_remember_me").checked){
+				rememberMeCreds = {rememberEmail:email, rememberPass:password}; 
+				
+			}
+			
+			else {
+				rememberMeCreds = {rememberEmail:"", rememberPass:""};
+			}
+			
+			var rememberMeCreds_JSON = JSON.stringify(rememberMeCreds);
+			localStorage.setItem("remember_me_credentials", rememberMeCreds_JSON);
+			form.action = "mainmenu.html";
+		}
+		
+	  	return false;
+	}
+
+	function verifyCredentials(database,email,password){
+		console.log("inside verify cfunction");
+		if (email.length === 0 || password.length === 0) return 2;
+		for (var i=0; i < database.length; i++){
+			if (database[i].email == email && database[i].password == password){
+				return 0;
+			}
+		}
+		return 1;
+	}
+	
+	function fillCredentials(){
+		if (localStorage.getItem("remember_me_credentials") != null){
+			var rememberMeCreds = JSON.parse(localStorage.getItem("remember_me_credentials"));
+			document.getElementById("email").value = rememberMeCreds.rememberEmail;
+			document.getElementById("password").value = rememberMeCreds.rememberPass;
+		}
+	}
+	
+	fillCredentials();
+</script>
+</body>
+</html>
